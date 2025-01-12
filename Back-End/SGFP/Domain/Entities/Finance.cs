@@ -1,7 +1,14 @@
-﻿namespace SGFP.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SGFP.Domain.Entities
 {
+    [Table("finances")]
     public class Finance
     {
+        public Finance()
+        {
+            
+        }
         public Finance(string description, MovementType categ, Guid userId, string subCateg)
         {
             this.Description = description;

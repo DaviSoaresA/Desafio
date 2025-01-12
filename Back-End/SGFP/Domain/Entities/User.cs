@@ -1,7 +1,14 @@
-﻿namespace SGFP.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SGFP.Domain.Entities
 {
+    [Table("users")]
     public class User
     {
+        public User()
+        {
+            
+        }
         public User(Guid id, string name, string email, string password, ICollection<Finance> finances)
         {
             this.Id = id;

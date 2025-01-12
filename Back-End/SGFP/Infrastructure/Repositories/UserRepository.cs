@@ -17,26 +17,26 @@ namespace SGFP.Infrastructure.Repositories
 
         public async Task<User> GetByIdAsync(Guid id)
         {
-            var query = "SELECT * FROM Users WHERE Id = @Id";
+            var query = "SELECT * FROM users WHERE Id = @Id";
             return await _dbConnection.QueryFirstOrDefaultAsync<User>(query, new {Id = id});
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            var query = "SELECT * FROM Users";
+            var query = "SELECT * FROM users";
             return await _dbConnection.QueryAsync<User>(query);
         }
 
         public async Task<User> GetByEmailAsync(string email)
         {
-            var query = "SELECT * FROM Users WHERE Email = @Email";
+            var query = "SELECT * FROM users WHERE Email = @Email";
             return await _dbConnection.QueryFirstOrDefaultAsync<User>(query, new { Email = email });
         }
 
         public async Task AddAsync(User user)
         {
             var query = @"
-                INSERT INTO Users (Id, Name, Email, Password, Finances)
+                INSERT INTO users (Id, Name, Email, Password, Finances)
                 VALUES (@Id, @Name, @Email, @Password, @Finances)";
             await _dbConnection.ExecuteAsync(query, new {user.Id, user.Name, user.Email, user.Password, user.Finances});
         }
@@ -44,7 +44,7 @@ namespace SGFP.Infrastructure.Repositories
         public async Task UpdateAsync(User user)
         {
             var query = @"
-                UPDATE Users
+                UPDATE users
                 SET Name = @Name, Email = @Email, Password = @Password, Finances = @Finances
                 WHERE Id = @Id";
             await _dbConnection.ExecuteAsync(query, new {user.Id, user.Name, user.Email, user.Password, user.Finances});
@@ -52,7 +52,7 @@ namespace SGFP.Infrastructure.Repositories
 
         public async Task DeleteAsync(Guid id)
         {
-            var query = "DELETE FROM Users WHERE Id = @Id";
+            var query = "DELETE FROM users WHERE Id = @Id";
             await _dbConnection.ExecuteAsync(query, new { Id = id });
         }
     }

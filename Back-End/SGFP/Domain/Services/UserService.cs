@@ -1,24 +1,22 @@
 ﻿using SGFP.Application.DTOs;
 using SGFP.Domain.Entities;
+using SGFP.Domain.Interfaces;
 using SGFP.Infrastructure.Repositories;
 
 namespace SGFP.Domain.Services
 {
     public class UserService
     {
-        private readonly UserRepository _repository;
+        private readonly IUserRepository _repository;
 
-        private readonly FinanceRepository _financeRepository;
-
-        public UserService(UserRepository repository, FinanceRepository financeRepository)
+        public UserService(IUserRepository repository)
         {
             _repository = repository;
-            _financeRepository = financeRepository;
         }
 
         public async Task<UserDTO> GetByIdAsync(Guid id)
         {
-            if (_repository.GetByIdAsync(id).Equals(null))
+            if (_repository.GetByIdAsync(id) == null)
             {
                 throw new Exception("Usuário não encontrado!");
             }
@@ -28,7 +26,7 @@ namespace SGFP.Domain.Services
 
         public async Task<UserDTO> GetByEmailAsync(string email)
         {
-            if (_repository.GetByEmailAsync(email).Equals(null))
+            if (_repository.GetByEmailAsync(email) == null)
             {
                 throw new Exception("Usuário não encontrado!");
             }
@@ -52,7 +50,7 @@ namespace SGFP.Domain.Services
             {
                 throw new Exception("As senhas estão diferentes");
             }
-            if (!_repository.GetByEmailAsync(insertDTO.Email).Equals(null))
+            if (_repository.GetByEmailAsync(insertDTO.Email).Result != null)
             {
                 throw new Exception("Email já existente");
             }
@@ -63,11 +61,11 @@ namespace SGFP.Domain.Services
 
         public async Task UpdateAsync(Guid id,UserDTO userDTO)
         {
-            if (_repository.GetByIdAsync(id).Equals(null))
+            if (_repository.GetByIdAsync(id) == null)
             {
                 throw new KeyNotFoundException("Usuário não encontrado ou inválido!");
             }
-            if (!_repository.GetByEmailAsync(userDTO.Email).Equals(null))
+            if (_repository.GetByEmailAsync(userDTO.Email).Result != null)
             {
                 throw new Exception("Email já existente");
             }
@@ -78,7 +76,7 @@ namespace SGFP.Domain.Services
 
         public async Task DeleteAsync(Guid id)
         {
-            if (_repository.GetByIdAsync(id).Equals(null))
+            if (_repository.GetByIdAsync(id) == null)
             {
                 throw new KeyNotFoundException("Usuário não encontrado ou inválido!");
             }

@@ -16,26 +16,26 @@ namespace SGFP.Infrastructure.Repositories
 
         public async Task<Finance> GetByIdAsync(Guid id)
         {
-            var query = "SELECT * FROM Finances WHERE Id = @Id";
+            var query = "SELECT * FROM finances WHERE Id = @Id";
             return await _dbConnection.QueryFirstOrDefaultAsync<Finance>(query, new { Id = id });
         }
 
         public async Task<IEnumerable<Finance>> GetAllAsync()
         {
-            var query = "SELECT * FROM Finances";
+            var query = "SELECT * FROM finances";
             return await _dbConnection.QueryAsync<Finance>(query);
         }
 
         public async Task<IEnumerable<Finance>> GetByUserAsync(Guid userId)
         {
-            var query = "SELECT * FROM Finances WHERE UserId = @Id";
+            var query = "SELECT * FROM finances WHERE UserId = @Id";
             return await _dbConnection.QueryFirstOrDefaultAsync<IEnumerable<Finance>>(query, new {Id = userId});
         }
 
         public async Task AddAsync(Finance finance)
         {
             var query = @"
-                INSERT INTO Finances (Id, Description, Categ, User, SubCateg)
+                INSERT INTO finances (Id, Description, Categ, User, SubCateg)
                 VALUES (@Id, @Description, @Categ, @User, @SubCateg)";
             await _dbConnection.ExecuteAsync(query, new { finance.Id, finance.Description, finance.Categ, finance.User, finance.SubCateg});
         }
@@ -43,7 +43,7 @@ namespace SGFP.Infrastructure.Repositories
         public async Task UpdateAsync(Finance finance)
         {
             var query = @"
-                UPDATE Finances
+                UPDATE finances
                 SET Description = @Description, Categ = @Categ, User = @User, SubCateg = @SubCateg
                 WHERE Id = @Id";
             await _dbConnection.ExecuteAsync(query, new { finance.Id, finance.Description, finance.Categ, finance.User, finance.SubCateg });
@@ -51,7 +51,7 @@ namespace SGFP.Infrastructure.Repositories
 
         public async Task DeleteAsync(Guid id)
         {
-            var query = "DELETE FROM Finances WHERE Id = @Id";
+            var query = "DELETE FROM finances WHERE Id = @Id";
             await _dbConnection.ExecuteAsync(query, new { Id = id });
         }
     }
