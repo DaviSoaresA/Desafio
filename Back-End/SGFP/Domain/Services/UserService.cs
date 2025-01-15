@@ -16,22 +16,39 @@ namespace SGFP.Domain.Services
 
         public async Task<UserDTO> GetByIdAsync(Guid id)
         {
-            if (_repository.GetByIdAsync(id) == null)
+            var userGet = await _repository.GetByIdAsync(id);
+            if (userGet == null)
             {
                 throw new Exception("Usuário não encontrado!");
             }
-            User user = await _repository.GetByIdAsync(id); 
+            User user = userGet; 
             return new UserDTO(user.Name, user.Email);
         }
 
         public async Task<UserDTO> GetByEmailAsync(string email)
         {
-            if (_repository.GetByEmailAsync(email) == null)
+            if (await _repository.GetByEmailAsync(email) == null)
             {
                 throw new Exception("Usuário não encontrado!");
             }
             User user = await _repository.GetByEmailAsync(email);
             return new UserDTO(user.Name, user.Email);
+        }
+
+        public async Task<User> Authenticate(string email, string password)
+        {
+            var user = await _repository.GetByEmailAsync(email);
+
+            if (user == null)
+            {
+                return null;
+            }
+            if (!user.Password.Equals(password))
+            {
+                return null;
+            }
+
+            return user;
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllAsync()
@@ -61,7 +78,7 @@ namespace SGFP.Domain.Services
 
         public async Task UpdateAsync(Guid id,UserDTO userDTO)
         {
-            if (_repository.GetByIdAsync(id) == null)
+            if (await _repository.GetByIdAsync(id) == null)
             {
                 throw new KeyNotFoundException("Usuário não encontrado ou inválido!");
             }
@@ -69,14 +86,14 @@ namespace SGFP.Domain.Services
             {
                 throw new Exception("Email já existente");
             }
-            User user = _repository.GetByIdAsync(id).Result;
+            User user = await _repository.GetByIdAsync(id);
 
             await _repository.UpdateAsync(new User(user.Id, userDTO.Name, userDTO.Email, user.Password, user.Finances));
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            if (_repository.GetByIdAsync(id) == null)
+            if (await _repository.GetByIdAsync(id) == null)
             {
                 throw new KeyNotFoundException("Usuário não encontrado ou inválido!");
             }

@@ -19,11 +19,12 @@ namespace SGFP.Domain.Services
 
         public async Task<Finance> GetByIdAsync(Guid id)
         {
-            if (_repository.GetByIdAsync(id) == null)
+            var financeGet = await _repository.GetByIdAsync(id);
+            if (financeGet == null)
             {
                 throw new HttpRequestException("Movimentação não encontrada!");
             }
-            Finance finance = await _repository.GetByIdAsync(id);
+            Finance finance = financeGet;
             return finance;
         }
 
@@ -35,35 +36,67 @@ namespace SGFP.Domain.Services
                 finances.Add(finance);
             }
             return finances;
+
+        }
+
+        public async Task<IEnumerable<Finance>> GetAllExpensesAsync(Guid userId)
+        {
+
+            var finances = await _repository.GetAllExpensesAsync(userId);
+            List<Finance> financesList = finances.ToList();
+            return finances;
+
+        }
+
+        public async Task<IEnumerable<Finance>> GetAllRevenueAsync(Guid userId)
+        {
+            var finances = await _repository.GetAllRevenueAsync(userId);
+            List<Finance> financesList = finances.ToList();
+            return finances;
+
+        }
+
+        public async Task<IEnumerable<Finance>> GetByUserAsync(Guid userid)
+        {
+            if (await _userRepository.GetByIdAsync(userid) == null)
+            {
+                throw new BadHttpRequestException("Logue primeiro");
+            }
+            List<Finance> finances = new();
+            foreach (var finance in await _repository.GetByUserAsync(userid))
+            {
+                finances.Add(finance);
+            }
+            return finances;
         }
 
         public async Task AddAsync(FinanceDTO financeDTO)
         {
-            if (_userRepository.GetByIdAsync(financeDTO.UserId) == null)
+            if (await _userRepository.GetByIdAsync(financeDTO.UserId) == null)
             {
                 throw new BadHttpRequestException("Logue primeiro");
             }
-            Finance finance = new Finance(financeDTO.Description, financeDTO.Categ, financeDTO.UserId, financeDTO.SubCateg);
+            Finance finance = new Finance(financeDTO.Description, financeDTO.Categ, financeDTO.UserId, financeDTO.SubCateg, financeDTO.Value);
             await _repository.AddAsync(finance);
         }
 
         public async Task UpdateAsync(Guid id, FinanceDTO financeDTO)
         {
-            if (_repository.GetByIdAsync(id) == null)
+            if (await _repository.GetByIdAsync(id) == null)
             {
                 throw new HttpRequestException("Movimentação não encontrada!");
             }
-            if (_userRepository.GetByIdAsync(financeDTO.UserId) == null)
+            if (await _userRepository.GetByIdAsync(financeDTO.UserId) == null)
             {
                 throw new BadHttpRequestException("Logue primeiro");
             }
-            Finance finance = await _repository.GetByIdAsync(id);
+            Finance finance = new Finance(id, financeDTO.Description, financeDTO.Categ, financeDTO.UserId, financeDTO.SubCateg, financeDTO.Value);
             await _repository.UpdateAsync(finance);
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            if (_repository.GetByIdAsync(id) == null)
+            if (await _repository.GetByIdAsync(id) == null)
             {
                 throw new HttpRequestException("Movimentação não encontrada!");
             }

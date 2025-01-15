@@ -36,18 +36,18 @@ namespace SGFP.Infrastructure.Repositories
         public async Task AddAsync(User user)
         {
             var query = @"
-                INSERT INTO users (Id, Name, Email, Password, Finances)
-                VALUES (@Id, @Name, @Email, @Password, @Finances)";
-            await _dbConnection.ExecuteAsync(query, new {user.Id, user.Name, user.Email, user.Password, user.Finances});
+                INSERT INTO users (Id, Name, Email, Password)
+                VALUES (@Id, @Name, @Email, @Password)";
+            await _dbConnection.ExecuteAsync(query, new {user.Id, user.Name, user.Email, user.Password});
         }
 
         public async Task UpdateAsync(User user)
         {
             var query = @"
                 UPDATE users
-                SET Name = @Name, Email = @Email, Password = @Password, Finances = @Finances
+                SET Name = @Name, Email = @Email, Password = @Password
                 WHERE Id = @Id";
-            await _dbConnection.ExecuteAsync(query, new {user.Id, user.Name, user.Email, user.Password, user.Finances});
+            await _dbConnection.ExecuteAsync(query, new {Id = user.Id, Name = user.Name, Email = user.Email, Password = user.Password});
         }
 
         public async Task DeleteAsync(Guid id)

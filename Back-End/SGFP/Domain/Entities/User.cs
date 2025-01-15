@@ -25,9 +25,13 @@ namespace SGFP.Domain.Entities
             this.Finances = new List<Finance>();
             Id = Guid.NewGuid();
         }
+        [Column("id")]
         public Guid Id { get; init; }
+        [Column("name")]
         public string Name { get; private set; }
+        [Column("email")]
         public string Email { get; private set; }
+        [Column("password")]
         public string Password { get; private set; }
         public ICollection<Finance> Finances { get; private set; }
     }

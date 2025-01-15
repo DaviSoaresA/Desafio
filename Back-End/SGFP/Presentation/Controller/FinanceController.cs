@@ -34,6 +34,45 @@ namespace SGFP.Presentation.Controller
             } 
         }
 
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetByUser(Guid userId)
+        {
+            try
+            {
+                return Ok(await _financeService.GetByUserAsync(userId));
+            }
+            catch (BadHttpRequestException nfe)
+            {
+                return BadRequest(nfe.Message);
+            }
+        }
+
+        [HttpGet("expense/{userId}")]
+        public async Task<IActionResult> GetExpenses(Guid userId)
+        {
+            try
+            {
+                return Ok(await _financeService.GetAllExpensesAsync(userId));
+            }
+            catch (BadHttpRequestException nfe)
+            {
+                return BadRequest(nfe.Message);
+            }
+        }
+
+        [HttpGet("revenue/{userId}")]
+        public async Task<IActionResult> GetRevenues(Guid userId)
+        {
+            try
+            {
+                return Ok(await _financeService.GetAllRevenueAsync(userId));
+            }
+            catch (BadHttpRequestException nfe)
+            {
+                return BadRequest(nfe.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]FinanceDTO financeDTO)
         {
@@ -44,7 +83,7 @@ namespace SGFP.Presentation.Controller
             try
             {
                 await _financeService.AddAsync(financeDTO);
-                return Created();
+                return CreatedAtAction(nameof(GetAll), financeDTO);
             }
             catch (BadHttpRequestException ex)
             {

@@ -1,0 +1,135 @@
+.signForm{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #00100050;
+    border-radius: 20px;
+    gap: 30px;
+    height: 96%;
+    width: 40%;
+    box-shadow: 0px 0px 5px 1px #103010;
+}
+
+.title{
+    font-size: 25px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    margin-bottom: 5%;
+    width: 50%;
+}
+
+.inputLog{
+    height: 30px;
+    width: 70%;
+    border: 1px solid #002000;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 5px;
+
+    &:focus{
+        cursor: pointer;
+        box-shadow: 0px 0px 5px 2px #205020;
+    }
+}
+
+.passwordArea{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 30px;
+    width: 72%;
+}
+
+.passwordArea > input{
+    height: 30px;
+    width: 100%;
+    border: 1px solid #002000;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 5px 40px 5px 5px;
+
+    &:focus{
+        cursor: pointer;
+        box-shadow: 0px 0px 5px 2px #205020;
+    }
+}
+
+.icon{
+    position: absolute;
+    right: 10px;
+    top: 3px;
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.buttonSign{
+    height: 40px;
+    width: 35%;
+    background-color: #103010;
+    font-size: 20px;
+    border: 1px solid #003000;
+    border-radius: 15px;
+    color: #ddd;
+    margin-top: 30%;
+    
+    &:hover{
+        cursor: pointer;
+        background-color: #305030;
+        box-shadow: 0px 0px 5px 5px #205020;
+        color: #ccc;
+    }
+}
+.buttonDelete{
+    height: 40px;
+    width: 35%;
+    background-color: #801010;
+    font-size: 20px;
+    border: 1px solid #500000;
+    border-radius: 15px;
+    color: #ddd;
+    margin-top: 30%;
+    
+    &:hover{
+        cursor: pointer;
+        background-color: #901010;
+        box-shadow: 0px 0px 5px 5px #a00010;
+        color: #eee;
+    }
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.back{
+    position: absolute;
+    top: 3rem;
+    left: 28rem;
+
+    &:hover{
+        cursor: pointer;
+    }
+}

@@ -37,6 +37,20 @@ namespace SGFP.Presentation.Controller
             }
         }
 
+        [HttpGet("email/{email}")]
+        public async Task<IActionResult> GetByEmail(string email)
+        {
+            try
+            {
+                var user = await _userService.GetByEmailAsync(email);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserInsertDTO insertDTO)
         {
@@ -47,7 +61,7 @@ namespace SGFP.Presentation.Controller
             try
             {
                 await _userService.AddAsync(insertDTO);
-                return Created();
+                return CreatedAtAction(nameof(GetByEmail), new {insertDTO.Email}, insertDTO);
             }
             catch (Exception ex)
             {
@@ -66,7 +80,7 @@ namespace SGFP.Presentation.Controller
             try
             {
                 await _userService.UpdateAsync(id, userDTO);
-                return Ok();
+                return NoContent();
             }
             catch(KeyNotFoundException ex)
             {

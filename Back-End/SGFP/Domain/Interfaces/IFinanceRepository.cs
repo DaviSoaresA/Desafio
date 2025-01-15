@@ -10,5 +10,7 @@ namespace SGFP.Domain.Interfaces
         Task AddAsync(Finance finance);
         Task UpdateAsync(Finance finance);
         Task DeleteAsync(Guid id);
+        Task<IEnumerable<Finance>> GetAllExpensesAsync(Guid userId);
+        Task<IEnumerable<Finance>> GetAllRevenueAsync(Guid userId);
     }
 }
