@@ -46,7 +46,7 @@ export default function EditFinance() {
         navigation("/");
       } 
     } catch (error) {
-      alert(error.stack);
+      alert("Erro ao alterar Movimentação");
     }
   }
 

@@ -57,7 +57,7 @@ export default function Finances() {
         }
       }
       catch (err){
-        alert(err);
+        alert("Erro ao buscar despesas");
       }
     }
     const fetchRevenue = async () =>{
@@ -70,7 +70,7 @@ export default function Finances() {
         }
       }
       catch (err){
-        alert(err);
+        alert("Erro ao buscar receitas");
       }
     }
     fetchExpense();

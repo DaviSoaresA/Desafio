@@ -38,11 +38,9 @@ export default function AddFinance() {
         if (response.status === 201) {
           alert("Movimentação criada com sucesso");
           navigation("/home");
-        } else {
-          alert("Erro ao fazer cadastro!");
         }
       } catch (error) {
-        alert(error);
+        alert("Erro ao adicionar Movimentação");
       }
     };
 

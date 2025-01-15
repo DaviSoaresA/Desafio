@@ -40,7 +40,7 @@ export default function Register() {
         navigation("/");
       }
     } catch (error) {
-      alert(error.message + error.stack);
+      alert("Erro ao cadastrar!");
     }
   };
 

@@ -38,11 +38,9 @@ export default function Login() {
         alert(response.data.message);
         navigation("/home");
 
-      } else {
-        alert("Erro ao fazer login");
       }
     } catch (error) {
-      alert("Erro: ", error);
+      alert("Erro ao fazer login");
     }
   };
 
