@@ -11,7 +11,6 @@ export default function EditFinance() {
   const [category, setCategory] = useState(0);
   const [subCategory, setSubCategory] = useState("");
   const [value, setValue] = useState(0);
-  const { user } = jwtDecode(localStorage.getItem("token"));
   const navigation = useNavigate();
 
   async function handleSubmit(e) {
@@ -26,6 +25,8 @@ export default function EditFinance() {
         alert("Preencha todos os campos!");
         return;
       }
+      
+      const user = jwtDecode(localStorage.getItem("token"));
 
       const finance = {
         Description: description,
@@ -42,10 +43,10 @@ export default function EditFinance() {
 
       if (response.status === 200) {
         alert("Movimentação alterada com sucesso");
-        navigation("/home");
+        navigation("/");
       } 
     } catch (error) {
-      alert("Erro ao tentar alterar Finança");
+      alert(error.stack);
     }
   }
 

@@ -29,8 +29,6 @@ export default function AddFinance() {
           SubCateg: subCategory,
           Value: value
         };
-
-        console.log(finance);
   
         const response = await axios.post(
           "http://localhost:5086/api/finance",

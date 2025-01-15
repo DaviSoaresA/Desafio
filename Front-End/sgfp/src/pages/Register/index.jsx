@@ -30,20 +30,17 @@ export default function Register() {
         Password: password,
         ConfirmPassword: confirmPassword
       };
+      
 
-      const response = await axios.post(
-        "http://localhost:5086/api/user",
-        credentials
-      );
+      const response = await axios.post("http://localhost:5086/api/user",credentials);
+      
 
-      if (response.status >= 200 && response < 300) {
+      if (response.status === 201) {
         alert("Bem-Vindo!" + response.data.name);
-        navigation("/login");
-      } else {
-        alert("Erro ao fazer cadastro!");
+        navigation("/");
       }
     } catch (error) {
-      alert("Erro: ", error);
+      alert(error.message + error.stack);
     }
   };
 

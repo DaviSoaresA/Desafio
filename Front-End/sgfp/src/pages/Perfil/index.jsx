@@ -27,6 +27,7 @@ export default function Perfil() {
   const handleDeleteF = async (e, id) => {
     e.preventDefault();
     
+    
     try {
         const response = await axios.delete(`http://localhost:5086/api/finance/${id}`);
 
